@@ -1,6 +1,7 @@
-package com.chaeniiz.weatherdiary
+package com.chaeniiz.weatherdiary.data
 
 import android.content.Context
+import com.chaeniiz.weatherdiary.data.network.api.CurrentWeatherApi
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -20,7 +21,7 @@ class ApiClient(
 
     private val adapter: Retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("http://api.openweathermap.org/data/2.5/weather?q=")
+            .baseUrl("https://api.openweathermap.org/data/2.5/")
             .client(buildOkHttpClient().build())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

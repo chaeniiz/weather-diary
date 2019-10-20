@@ -1,6 +1,8 @@
-package com.chaeniiz.weatherdiary
+package com.chaeniiz.weatherdiary.data
 
 import android.content.Context
+import com.chaeniiz.weatherdiary.data.network.api.CurrentWeatherApi
+import com.chaeniiz.weatherdiary.WeatherDiary
 
 interface ApiClientSpec {
     val currentWeatherApi: CurrentWeatherApi
