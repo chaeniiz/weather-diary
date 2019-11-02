@@ -35,4 +35,8 @@ class MainPresenter(
             }
         })
     }
+
+    fun onWriteButtonClicked() {
+        view.startWriteActivity()
+    }
 }
