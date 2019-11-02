@@ -1,6 +1,7 @@
 package com.chaeniiz.weatherdiary.data.local
 
 import androidx.room.*
+import com.chaeniiz.weatherdiary.data.local.model.Diary
 
 @Dao
 interface DiaryDao {
