@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="20dp">
+
+    <EditText
+        android:id="@+id/locationEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="위치"
+        />
+
+    <EditText
+        android:id="@+id/weatherEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="날씨"
+        android:layout_marginTop="20dp"
+        />
+
+    <EditText
+        android:id="@+id/contentEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="내용"
+        android:layout_marginTop="20dp"
+        />
+
+    <Button
+        android:id="@+id/writeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="작성"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        />
+
+</LinearLayout>

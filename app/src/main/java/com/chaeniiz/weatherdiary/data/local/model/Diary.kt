@@ -9,7 +9,7 @@ import java.util.*
 class Diary(
     @PrimaryKey val id: Int,
     @ColumnInfo(name = "location") val location: String,
-    @ColumnInfo(name = "weather") val weather: Weather,
+    @ColumnInfo(name = "weather") val weather: String,
     @ColumnInfo(name = "content") val content: String,
     @ColumnInfo(name = "updated_at") val updatedAt: Date
 )
