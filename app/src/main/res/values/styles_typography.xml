@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Typography">
+        <item name="android:fontFamily">@font/font</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="Typography.100">
+        <item name="android:textSize">@dimen/font_100</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Typography.150">
+        <item name="android:textSize">@dimen/font_150</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Typography.200">
+        <item name="android:textSize">@dimen/font_200</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Typography.225">
+        <item name="android:textSize">@dimen/font_225</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Typography.250">
+        <item name="android:textSize">@dimen/font_250</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Typography.300">
+        <item name="android:textSize">@dimen/font_300</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Typography.400">
+        <item name="android:textSize">@dimen/font_400</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Typography.450">
+        <item name="android:textSize">@dimen/font_450</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Typography.500">
+        <item name="android:textSize">@dimen/font_500</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Typography.550">
+        <item name="android:textSize">@dimen/font_550</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Typography.600">
+        <item name="android:textSize">@dimen/font_600</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Typography.650">
+        <item name="android:textSize">@dimen/font_650</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Typography.700">
+        <item name="android:textSize">@dimen/font_700</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Typography.750">
+        <item name="android:textSize">@dimen/font_750</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Typography.800">
+        <item name="android:textSize">@dimen/font_800</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Typography.900">
+        <item name="android:textSize">@dimen/font_900</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+</resources>
