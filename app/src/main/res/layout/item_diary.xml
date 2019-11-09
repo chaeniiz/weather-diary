@@ -5,20 +5,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/spacing_400"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/descriptionLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingStart="@dimen/spacing_400"
+        android:paddingEnd="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/dateTextView"
-            style="@style/Typography.200"
+            style="@style/Typography.250"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +28,7 @@
 
         <TextView
             android:id="@+id/locationTextView"
-            style="@style/Typography.200"
+            style="@style/Typography.250"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_100"
@@ -37,7 +38,7 @@
 
         <TextView
             android:id="@+id/weatherTextView"
-            style="@style/Typography.200"
+            style="@style/Typography.250"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_100"
@@ -49,13 +50,17 @@
 
     <TextView
         android:id="@+id/contentTextView"
-        style="@style/Typography.200"
+        style="@style/Typography.250"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_400"
         android:ellipsize="end"
         android:lineSpacingExtra="@dimen/spacing_100"
         android:maxLines="4"
+        android:paddingStart="0dp"
+        android:paddingTop="@dimen/spacing_400"
+        android:paddingEnd="@dimen/spacing_400"
+        android:paddingBottom="@dimen/spacing_400"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/barrier"
@@ -68,5 +73,12 @@
         android:layout_height="wrap_content"
         app:barrierDirection="end"
         app:constraint_referenced_ids="descriptionLayout" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_100"
+        android:layout_marginStart="@dimen/spacing_400"
+        android:background="@color/divider"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

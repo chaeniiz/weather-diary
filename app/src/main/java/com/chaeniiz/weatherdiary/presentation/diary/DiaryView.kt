@@ -1,7 +1,9 @@
 package com.chaeniiz.weatherdiary.presentation.diary
 
+import com.chaeniiz.entity.entities.Diary
+
 interface DiaryView {
-    fun setWeatherTextView(weather: String)
-    fun setContentTextView(content: String)
     fun startWriteActivity()
+    fun setAdapter(diaries: List<Diary>)
+    fun showToast(text: String)
 }

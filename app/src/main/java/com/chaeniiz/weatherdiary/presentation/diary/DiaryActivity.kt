@@ -2,10 +2,13 @@ package com.chaeniiz.weatherdiary.presentation.diary
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.chaeniiz.entity.entities.Diary
 import com.chaeniiz.weatherdiary.R
 import com.chaeniiz.weatherdiary.presentation.write.WriteActivity
 import kotlinx.android.synthetic.main.activity_diary.*
 import org.jetbrains.anko.onClick
+import org.jetbrains.anko.toast
 
 class DiaryActivity : AppCompatActivity(), DiaryView {
 
@@ -24,15 +27,21 @@ class DiaryActivity : AppCompatActivity(), DiaryView {
         presenter.onCreate()
     }
 
-    override fun setWeatherTextView(weather: String) {
-        weatherTextView.text = weather
-    }
-
-    override fun setContentTextView(content: String) {
-        contentTextView.text = content
-    }
-
     override fun startWriteActivity() {
         WriteActivity.start(this)
+    }
+
+    override fun setAdapter(diaries: List<Diary>) {
+        with(diaryRecyclerView) {
+            adapter = DiaryRecyclerAdapter(
+                diaries,
+                presenter::onDiaryClicked
+            )
+            layoutManager = LinearLayoutManager(context)
+        }
+    }
+
+    override fun showToast(text: String) {
+        toast(text)
     }
 }

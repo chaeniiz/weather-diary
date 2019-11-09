@@ -1,62 +1,37 @@
 package com.chaeniiz.weatherdiary.presentation.diary
 
 import android.content.Context
-import com.chaeniiz.entity.entities.CurrentWeather
 import com.chaeniiz.entity.entities.Diary
 import com.chaeniiz.weatherdiary.data.local.DiaryRepository
-import com.chaeniiz.weatherdiary.data.network.repositories.CurrentWeatherRepository
 import com.chaeniiz.weatherdiary.presentation.base.DefaultSingleObserver
-import usecases.GetCurrentWeather
-import usecases.GetDiary
+import usecases.GetDiaries
 
 class DiaryPresenter(
     val view: DiaryView,
     context: Context,
-    private val getCurrentWeather: GetCurrentWeather = GetCurrentWeather(
-        CurrentWeatherRepository(context)
-    ),
-    private val getDiary: GetDiary = GetDiary(
-        DiaryRepository(context)
-    )
+    private val getDiaries: GetDiaries = GetDiaries(DiaryRepository(context))
 ) {
     fun onCreate() {
-        getCurrentWeather("Seoul")
-        getDiary(0)
+        getDiaries()
     }
 
-    private fun getCurrentWeather(city: String) {
-        getCurrentWeather.apply {
-            this.city = city
-        }.execute(object : DefaultSingleObserver<CurrentWeather>() {
-            override fun onSuccess(t: CurrentWeather) {
-                view.setWeatherTextView(t.weather[0].main)
+    private fun getDiaries() {
+        getDiaries.execute(object : DefaultSingleObserver<List<Diary>>() {
+            override fun onSuccess(t: List<Diary>) {
+                view.setAdapter(t)
             }
 
             override fun onError(e: Throwable) {
                 super.onError(e)
-                e.message?.let { view.setWeatherTextView(it) }
-                view.setWeatherTextView(e.toString())
-            }
-        })
-    }
-
-    private fun getDiary(id: Int) {
-        getDiary.apply {
-            this.id = id
-        }.execute(object : DefaultSingleObserver<Diary>() {
-            override fun onSuccess(t: Diary) {
-                view.setContentTextView(t.content)
-            }
-
-            override fun onError(e: Throwable) {
-                super.onError(e)
-                e.message?.let { view.setContentTextView(it) }
-                view.setContentTextView(e.toString())
             }
         })
     }
 
     fun onWriteButtonClicked() {
         view.startWriteActivity()
+    }
+
+    fun onDiaryClicked(id: Int) {
+        view.showToast("id: $id")
     }
 }
