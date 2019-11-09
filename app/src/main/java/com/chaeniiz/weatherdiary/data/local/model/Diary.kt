@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.*
+import com.chaeniiz.entity.entities.Diary as DiaryEntity
 
 @Entity(tableName = "Diary")
 class Diary(
@@ -12,4 +13,19 @@ class Diary(
     @ColumnInfo(name = "weather") val weather: String,
     @ColumnInfo(name = "content") val content: String,
     @ColumnInfo(name = "updated_at") val updatedAt: Date
+)
+
+fun Diary.toEntity(): DiaryEntity = DiaryEntity(
+    id,
+    location,
+    weather,
+    content,
+    updatedAt
+)
+fun DiaryEntity.toLocalModel() = Diary(
+    id,
+    location,
+    weather,
+    content,
+    updatedAt
 )
