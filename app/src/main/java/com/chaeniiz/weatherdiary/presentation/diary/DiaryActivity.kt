@@ -1,21 +1,21 @@
-package com.chaeniiz.weatherdiary.presentation.main
+package com.chaeniiz.weatherdiary.presentation.diary
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.chaeniiz.weatherdiary.R
 import com.chaeniiz.weatherdiary.presentation.write.WriteActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_diary.*
 import org.jetbrains.anko.onClick
 
-class MainActivity : AppCompatActivity(), MainView {
+class DiaryActivity : AppCompatActivity(), DiaryView {
 
-    private val presenter: MainPresenter by lazy {
-        MainPresenter(this, this)
+    private val presenter: DiaryPresenter by lazy {
+        DiaryPresenter(this, this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_diary)
 
         writeButton.onClick {
             presenter.onWriteButtonClicked()

@@ -1,4 +1,4 @@
-package com.chaeniiz.weatherdiary.presentation.main
+package com.chaeniiz.weatherdiary.presentation.diary
 
 import android.content.Context
 import com.chaeniiz.entity.entities.CurrentWeather
@@ -9,8 +9,8 @@ import com.chaeniiz.weatherdiary.presentation.base.DefaultSingleObserver
 import usecases.GetCurrentWeather
 import usecases.GetDiary
 
-class MainPresenter(
-    val view: MainView,
+class DiaryPresenter(
+    val view: DiaryView,
     context: Context,
     private val getCurrentWeather: GetCurrentWeather = GetCurrentWeather(
         CurrentWeatherRepository(context)
