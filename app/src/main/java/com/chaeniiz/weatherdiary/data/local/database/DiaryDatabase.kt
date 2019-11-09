@@ -15,10 +15,10 @@ abstract class DiaryDatabase: RoomDatabase() {
     abstract fun diaryDao(): DiaryDao
 
     companion object {
-        private var diaryDatabase: DiaryDatabase? = null
+        private lateinit var diaryDatabase: DiaryDatabase
 
-        fun getInstance(context: Context): DiaryDatabase? {
-            if (diaryDatabase == null) {
+        fun getInstance(context: Context): DiaryDatabase {
+            if (::diaryDatabase.isInitialized.not()) {
                 synchronized(DiaryDatabase::class) {
                     diaryDatabase = Room.databaseBuilder(
                         context.applicationContext,
@@ -30,9 +30,5 @@ abstract class DiaryDatabase: RoomDatabase() {
             }
             return diaryDatabase
         }
-    }
-
-    fun destroy() {
-        diaryDatabase = null
     }
 }
