@@ -42,6 +42,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$app_compat_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "org.jetbrains.anko:anko-sdk19:$anko_version"
+    implementation "androidx.recyclerview:recyclerview:$recycler_view_version"
 
     implementation "io.reactivex.rxjava2:rxandroid:$rx_android_version"
     implementation "io.reactivex.rxjava2:rxjava:$rx_java_version"

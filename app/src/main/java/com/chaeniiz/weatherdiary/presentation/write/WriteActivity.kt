@@ -7,13 +7,14 @@ import com.chaeniiz.weatherdiary.R
 import kotlinx.android.synthetic.main.activity_write.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.onClick
+import org.jetbrains.anko.singleTop
 
 class WriteActivity : AppCompatActivity(), WriteView {
 
     companion object {
         fun start(context: Context) {
             context.startActivity(
-                context.intentFor<WriteActivity>()
+                context.intentFor<WriteActivity>().singleTop()
             )
         }
     }
