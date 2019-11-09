@@ -9,7 +9,7 @@ import com.chaeniiz.weatherdiary.data.local.model.toLocalModel
 import io.reactivex.Completable
 import io.reactivex.Single
 
-class DiaryRepository(private val context: Context) : DiaryRepository {
+class DiaryRepository(context: Context) : DiaryRepository {
     private val dao = DiaryDatabase.getInstance(context).diaryDao()
 
     override fun getDiaries(): Single<List<Diary>> =

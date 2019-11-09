@@ -1,6 +1,7 @@
 package com.chaeniiz.weatherdiary.presentation.main
 
 interface MainView {
-    fun setTextView(text: String)
+    fun setWeatherTextView(weather: String)
+    fun setContentTextView(content: String)
     fun startWriteActivity()
 }
