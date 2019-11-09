@@ -27,7 +27,11 @@ class WriteActivity : AppCompatActivity(), WriteView {
         setContentView(R.layout.activity_write)
 
         writeButton.onClick {
-            
+            presenter.onWriteButtonClicked(
+                location = locationEditText.text.toString(),
+                weather = weatherEditText.text.toString(),
+                content = contentEditText.text.toString()
+            )
         }
 
         presenter.onCreate()

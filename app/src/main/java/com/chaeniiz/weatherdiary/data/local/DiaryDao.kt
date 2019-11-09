@@ -9,7 +9,7 @@ interface DiaryDao {
     fun getDiaries(): List<Diary>
 
     @Query("SELECT * FROM diary where id = :id")
-    fun getDiary(id: Int): Diary
+    fun getDiary(id: Int): Diary?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertDiary(diary: Diary)

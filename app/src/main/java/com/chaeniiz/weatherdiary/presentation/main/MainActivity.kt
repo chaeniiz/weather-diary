@@ -24,8 +24,12 @@ class MainActivity : AppCompatActivity(), MainView {
         presenter.onCreate()
     }
 
-    override fun setTextView(text: String) {
-        textView.text = text
+    override fun setWeatherTextView(weather: String) {
+        weatherTextView.text = weather
+    }
+
+    override fun setContentTextView(content: String) {
+        contentTextView.text = content
     }
 
     override fun startWriteActivity() {
