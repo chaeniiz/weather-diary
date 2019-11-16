@@ -1,10 +1,12 @@
 package com.chaeniiz.weatherdiary.presentation.diary
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chaeniiz.entity.entities.Diary
 import com.chaeniiz.weatherdiary.R
+import com.chaeniiz.weatherdiary.presentation.RequestCode
 import com.chaeniiz.weatherdiary.presentation.write.WriteActivity
 import kotlinx.android.synthetic.main.activity_diary.*
 import org.jetbrains.anko.onClick
@@ -27,8 +29,13 @@ class DiaryActivity : AppCompatActivity(), DiaryView {
         presenter.onCreate()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
+    }
+
     override fun startWriteActivity() {
-        WriteActivity.start(this)
+        WriteActivity.startForResult(this)
     }
 
     override fun setAdapter(diaries: List<Diary>) {
@@ -43,5 +50,12 @@ class DiaryActivity : AppCompatActivity(), DiaryView {
 
     override fun showToast(text: String) {
         toast(text)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            RequestCode.WRITE_ACTIVITY_CODE.ordinal -> presenter.onActivityResultFromWrite()
+        }
     }
 }

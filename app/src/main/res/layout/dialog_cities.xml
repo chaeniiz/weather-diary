@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/spacing_500"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_500">
+
+    <TextView
+        android:id="@+id/descriptionTextView"
+        style="@style/Typography.400"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="나는 지금,"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/seoulTextView"
+        style="@style/Typography.400"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_500"
+        android:text="서울"
+        android:textColor="@drawable/selector_write_text_view"
+        app:layout_constraintEnd_toStartOf="@+id/incheonTextView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTextView" />
+
+    <TextView
+        android:id="@+id/incheonTextView"
+        style="@style/Typography.400"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_500"
+        android:text="인천"
+        android:textColor="@drawable/selector_write_text_view"
+        app:layout_constraintEnd_toStartOf="@+id/daejeonTextView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/seoulTextView"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTextView" />
+
+    <TextView
+        android:id="@+id/daejeonTextView"
+        style="@style/Typography.400"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_500"
+        android:text="대전"
+        android:textColor="@drawable/selector_write_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/incheonTextView"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTextView" />
+
+    <TextView
+        android:id="@+id/gwangjuTextView"
+        style="@style/Typography.400"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_500"
+        android:text="광주"
+        android:textColor="@drawable/selector_write_text_view"
+        app:layout_constraintEnd_toStartOf="@+id/busanTextView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seoulTextView" />
+
+    <TextView
+        android:id="@+id/busanTextView"
+        style="@style/Typography.400"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_500"
+        android:text="부산"
+        android:textColor="@drawable/selector_write_text_view"
+        app:layout_constraintEnd_toStartOf="@+id/daeguTextView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/gwangjuTextView"
+        app:layout_constraintTop_toBottomOf="@+id/seoulTextView" />
+
+    <TextView
+        android:id="@+id/daeguTextView"
+        style="@style/Typography.400"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_500"
+        android:text="대구"
+        android:textColor="@drawable/selector_write_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/busanTextView"
+        app:layout_constraintTop_toBottomOf="@+id/seoulTextView" />
+
+    <TextView
+        android:id="@+id/ulsanTextView"
+        style="@style/Typography.400"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_500"
+        android:text="울산"
+        android:textColor="@drawable/selector_write_text_view"
+        app:layout_constraintEnd_toStartOf="@+id/jejuTextView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gwangjuTextView" />
+
+    <TextView
+        android:id="@+id/jejuTextView"
+        style="@style/Typography.400"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_500"
+        android:text="제주도"
+        android:textColor="@drawable/selector_write_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ulsanTextView"
+        app:layout_constraintTop_toBottomOf="@+id/gwangjuTextView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

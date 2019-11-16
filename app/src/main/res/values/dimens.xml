@@ -59,4 +59,6 @@
     <dimen name="divider_100">0.5dp</dimen>
     <dimen name="divider_200">1dp</dimen>
     <dimen name="divider_300">2dp</dimen>
+
+    <dimen name="quotes_image_size">40dp</dimen>
 </resources>
