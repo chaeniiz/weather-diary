@@ -8,12 +8,13 @@ import com.chaeniiz.entity.entities.Diary as DiaryEntity
 
 @Entity(tableName = "Diary")
 class Diary(
-    @PrimaryKey val id: Int,
     @ColumnInfo(name = "location") val location: String,
     @ColumnInfo(name = "weather") val weather: String,
     @ColumnInfo(name = "content") val content: String,
     @ColumnInfo(name = "updated_at") val updatedAt: Date
-)
+) {
+    @PrimaryKey(autoGenerate = true) var id: Int = 0
+}
 
 fun Diary.toEntity(): DiaryEntity = DiaryEntity(
     id,
@@ -23,7 +24,6 @@ fun Diary.toEntity(): DiaryEntity = DiaryEntity(
     updatedAt
 )
 fun DiaryEntity.toLocalModel() = Diary(
-    id,
     location,
     weather,
     content,
