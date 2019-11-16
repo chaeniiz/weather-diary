@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chaeniiz.entity.entities.Diary
 import com.chaeniiz.weatherdiary.R
 import com.chaeniiz.weatherdiary.presentation.RequestCode
+import com.chaeniiz.weatherdiary.presentation.diary.DiaryActivity
 import com.chaeniiz.weatherdiary.presentation.write.WriteActivity
 import kotlinx.android.synthetic.main.activity_home.*
 import org.jetbrains.anko.onClick
-import org.jetbrains.anko.toast
 
 class HomeActivity : AppCompatActivity(), HomeView {
 
@@ -34,6 +34,13 @@ class HomeActivity : AppCompatActivity(), HomeView {
         presenter.onDestroy()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            RequestCode.WRITE_ACTIVITY_CODE.ordinal -> presenter.onActivityResultFromWrite()
+        }
+    }
+
     override fun startWriteActivity() {
         WriteActivity.startForResult(this)
     }
@@ -48,14 +55,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
         }
     }
 
-    override fun showToast(text: String) {
-        toast(text)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            RequestCode.WRITE_ACTIVITY_CODE.ordinal -> presenter.onActivityResultFromWrite()
-        }
+    override fun showDiary(id: Int) {
+        DiaryActivity.start(this, id)
     }
 }

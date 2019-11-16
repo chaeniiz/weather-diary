@@ -36,7 +36,7 @@ class HomePresenter(
     }
 
     fun onDiaryClicked(id: Int) {
-        view.showToast("id: $id")
+        view.showDiary(id)
     }
 
     fun onActivityResultFromWrite() {

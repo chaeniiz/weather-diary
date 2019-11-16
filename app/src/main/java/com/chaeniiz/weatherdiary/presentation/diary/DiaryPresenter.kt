@@ -11,7 +11,7 @@ class DiaryPresenter(
 
     }
 
-    fun onCreate() {
+    fun onCreate(id: Int) {
 
     }
 }
