@@ -49,7 +49,11 @@ class DiaryPresenter(
     }
 
     fun onEditButtonClicked(id: Int, content: String) {
-        updateDiary(id, content)
+        when {
+            location == "" || weather == "" -> view.showErrorDialog(emptyContent = false)
+            content == "" -> view.showErrorDialog(emptyContent = true)
+            else -> updateDiary(id, content)
+        }
     }
 
     fun onDeleteButtonClicked() {

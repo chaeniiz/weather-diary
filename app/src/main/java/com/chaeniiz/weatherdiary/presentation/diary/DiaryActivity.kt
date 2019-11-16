@@ -95,6 +95,20 @@ class DiaryActivity : AppCompatActivity(), DiaryView {
         cityDialog.show()
     }
 
+    override fun showErrorDialog(emptyContent: Boolean) {
+        AlertDialogBuilder(this).apply {
+            message(
+                if (emptyContent)
+                    getString(R.string.error_no_content)
+                else
+                    getString(R.string.error_no_location)
+            )
+            positiveButton(getString(R.string.general_dialog_accept)) {
+                dismiss()
+            }
+        }.show()
+    }
+
     override fun showDeleteConfirmDialog() {
         AlertDialogBuilder(this).apply {
             message(getString(R.string.delete_confirm_dialog_message))
