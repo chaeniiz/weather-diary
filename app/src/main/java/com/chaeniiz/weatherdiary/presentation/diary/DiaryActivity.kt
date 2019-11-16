@@ -78,6 +78,8 @@ class DiaryActivity : AppCompatActivity(), DiaryView {
         cityDialog = AlertDialogBuilder(this).apply {
             val dialogView =
                 LayoutInflater.from(this@DiaryActivity).inflate(R.layout.dialog_cities, null)
+            dialogView.find<TextView>(R.id.descriptionTextView).text =
+                getString(R.string.city_dialog_description_past)
             dialogView.find<TextView>(R.id.seoulTextView)
                 .onClick { presenter.onCityClicked(City.SEOUL) }
             dialogView.find<TextView>(R.id.incheonTextView)

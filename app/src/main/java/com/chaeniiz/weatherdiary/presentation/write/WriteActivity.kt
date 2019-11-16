@@ -49,6 +49,8 @@ class WriteActivity : AppCompatActivity(), WriteView {
         cityDialog = AlertDialogBuilder(this).apply {
             val dialogView =
                 LayoutInflater.from(this@WriteActivity).inflate(R.layout.dialog_cities, null)
+            dialogView.find<TextView>(R.id.descriptionTextView).text =
+                getString(R.string.city_dialog_description_current)
             dialogView.find<TextView>(R.id.seoulTextView)
                 .onClick { presenter.onCityClicked(City.SEOUL) }
             dialogView.find<TextView>(R.id.incheonTextView)

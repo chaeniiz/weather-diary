@@ -7,4 +7,6 @@
     <string name="error_no_location">위치를 입력해 주세요.</string>
     <string name="error_no_content">내용을 입력해 주세요.</string>
     <string name="delete_confirm_dialog_message">일기를 삭제할까요?</string>
+    <string name="city_dialog_description_current">나는 지금,</string>
+    <string name="city_dialog_description_past">나는 그때,</string>
 </resources>
