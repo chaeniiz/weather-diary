@@ -1,4 +1,4 @@
-package com.chaeniiz.weatherdiary.presentation.diary
+package com.chaeniiz.weatherdiary.presentation.home
 
 import android.content.Context
 import com.chaeniiz.entity.entities.Diary
@@ -6,8 +6,8 @@ import com.chaeniiz.weatherdiary.data.local.DiaryRepository
 import com.chaeniiz.weatherdiary.presentation.base.DefaultSingleObserver
 import usecases.GetDiaries
 
-class DiaryPresenter(
-    val view: DiaryView,
+class HomePresenter(
+    val view: HomeView,
     context: Context,
     private val getDiaries: GetDiaries = GetDiaries(DiaryRepository(context))
 ) {

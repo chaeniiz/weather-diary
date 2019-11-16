@@ -1,8 +1,8 @@
-package com.chaeniiz.weatherdiary.presentation.diary
+package com.chaeniiz.weatherdiary.presentation.home
 
 import com.chaeniiz.entity.entities.Diary
 
-interface DiaryView {
+interface HomeView {
     fun startWriteActivity()
     fun setAdapter(diaries: List<Diary>)
     fun showToast(text: String)

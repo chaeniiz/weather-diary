@@ -1,4 +1,4 @@
-package com.chaeniiz.weatherdiary.presentation.diary
+package com.chaeniiz.weatherdiary.presentation.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,19 +8,19 @@ import com.chaeniiz.entity.entities.Diary
 import com.chaeniiz.weatherdiary.R
 import com.chaeniiz.weatherdiary.presentation.RequestCode
 import com.chaeniiz.weatherdiary.presentation.write.WriteActivity
-import kotlinx.android.synthetic.main.activity_diary.*
+import kotlinx.android.synthetic.main.activity_home.*
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.toast
 
-class DiaryActivity : AppCompatActivity(), DiaryView {
+class HomeActivity : AppCompatActivity(), HomeView {
 
-    private val presenter: DiaryPresenter by lazy {
-        DiaryPresenter(this, this)
+    private val presenter: HomePresenter by lazy {
+        HomePresenter(this, this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_diary)
+        setContentView(R.layout.activity_home)
 
         writeButton.onClick {
             presenter.onWriteButtonClicked()
@@ -40,7 +40,7 @@ class DiaryActivity : AppCompatActivity(), DiaryView {
 
     override fun setAdapter(diaries: List<Diary>) {
         with(diaryRecyclerView) {
-            adapter = DiaryRecyclerAdapter(
+            adapter = HomeRecyclerAdapter(
                 diaries,
                 presenter::onDiaryClicked
             )
