@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/WeatherDiaryTheme">
 
-        <activity android:name=".presentation.diary.DiaryActivity">
+        <activity android:name=".presentation.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

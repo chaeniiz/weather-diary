@@ -1,4 +1,4 @@
-package com.chaeniiz.weatherdiary.presentation.diary
+package com.chaeniiz.weatherdiary.presentation.home
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -7,7 +7,7 @@ import com.chaeniiz.weatherdiary.presentation.includeCommaAndSpace
 import com.chaeniiz.weatherdiary.presentation.toFormattedString
 import kotlinx.android.synthetic.main.item_diary.view.*
 
-class DiaryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class HomeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun bind(diary: Diary) {
         with(itemView) {
             dateTextView.text = diary.updatedAt.toFormattedString("yyyy. MM. dd")
