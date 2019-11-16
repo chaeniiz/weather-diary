@@ -9,7 +9,7 @@ import com.chaeniiz.weatherdiary.data.local.Converters
 import com.chaeniiz.weatherdiary.data.local.DiaryDao
 import com.chaeniiz.weatherdiary.data.local.model.Diary
 
-@Database(entities = [Diary::class], version = 1)
+@Database(entities = [Diary::class], version = 2)
 @TypeConverters(Converters::class)
 abstract class DiaryDatabase: RoomDatabase() {
     abstract fun diaryDao(): DiaryDao
