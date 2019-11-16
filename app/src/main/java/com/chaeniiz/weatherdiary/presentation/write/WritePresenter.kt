@@ -8,6 +8,7 @@ import com.chaeniiz.weatherdiary.data.local.DiaryRepository
 import com.chaeniiz.weatherdiary.data.network.repositories.CurrentWeatherRepository
 import com.chaeniiz.weatherdiary.presentation.base.DefaultCompletableObserver
 import com.chaeniiz.weatherdiary.presentation.base.DefaultSingleObserver
+import com.chaeniiz.weatherdiary.presentation.convertWeather
 import usecases.GetCurrentWeather
 import usecases.InsertDiary
 import java.util.*
@@ -52,10 +53,10 @@ class WritePresenter(
             this.city = city.value
         }.execute(object : DefaultSingleObserver<CurrentWeather>() {
             override fun onSuccess(t: CurrentWeather) {
-                weather = convertWeather(t.weather.first().id)
+                weather = t.weather.first().convertWeather()
                 view.setLocationTextView(
                     location = city.formattedString,
-                    weather = convertWeather(t.weather.first().id)
+                    weather = t.weather.first().convertWeather()
                 )
                 view.dismissCityDialog()
             }
@@ -91,15 +92,4 @@ class WritePresenter(
             }
         })
     }
-
-    private fun convertWeather(weatherId: Int): String =
-        when (weatherId) {
-            in 0..299 -> "뇌우"
-            in 300..399 -> "이슬비"
-            in 400..599 -> "비"
-            in 600..699 -> "눈"
-            in 700..799 -> "안개"
-            800 -> "맑음"
-            else -> "구름 많음"
-        }
 }

@@ -1,7 +1,11 @@
 package com.chaeniiz.weatherdiary.data.local
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.chaeniiz.weatherdiary.data.local.model.Diary
+import java.util.*
 
 @Dao
 interface DiaryDao {
@@ -14,9 +18,9 @@ interface DiaryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertDiary(diary: Diary)
 
-    @Update
-    fun updateDiary(diary: Diary)
+    @Query("UPDATE diary SET location = :location, weather = :weather, content = :content, updated_at = :updatedAt WHERE id = :id")
+    fun updateDiary(id: Int, location: String, weather: String, content: String, updatedAt: Date)
 
-    @Delete
-    fun deleteDiary(diary: Diary)
+    @Query("DELETE FROM diary WHERE id = :id")
+    fun deleteDiary(id: Int)
 }
