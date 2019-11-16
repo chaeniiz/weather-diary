@@ -22,6 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".presentation.write.WriteActivity" />
+        <activity android:name=".presentation.diary.DiaryActivity" />
 
     </application>
 
