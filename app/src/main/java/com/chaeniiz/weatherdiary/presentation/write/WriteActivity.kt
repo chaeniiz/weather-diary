@@ -1,21 +1,24 @@
 package com.chaeniiz.weatherdiary.presentation.write
 
-import android.content.Context
+import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.chaeniiz.weatherdiary.R
+import com.chaeniiz.weatherdiary.presentation.RequestCode
 import kotlinx.android.synthetic.main.activity_write.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.onClick
-import org.jetbrains.anko.singleTop
 
 class WriteActivity : AppCompatActivity(), WriteView {
 
     companion object {
-        fun start(context: Context) {
-            context.startActivity(
-                context.intentFor<WriteActivity>().singleTop()
-            )
+        fun startForResult(activity: Activity) {
+            with(activity) {
+                startActivityForResult(
+                    intentFor<WriteActivity>(),
+                    RequestCode.WRITE_ACTIVITY_CODE.ordinal
+                )
+            }
         }
     }
 

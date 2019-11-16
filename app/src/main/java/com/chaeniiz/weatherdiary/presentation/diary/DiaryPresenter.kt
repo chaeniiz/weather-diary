@@ -11,6 +11,10 @@ class DiaryPresenter(
     context: Context,
     private val getDiaries: GetDiaries = GetDiaries(DiaryRepository(context))
 ) {
+    fun onDestroy() {
+        getDiaries.dispose()
+    }
+
     fun onCreate() {
         getDiaries()
     }
@@ -33,5 +37,9 @@ class DiaryPresenter(
 
     fun onDiaryClicked(id: Int) {
         view.showToast("id: $id")
+    }
+
+    fun onActivityResultFromWrite() {
+        getDiaries()
     }
 }
