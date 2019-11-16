@@ -47,6 +47,9 @@ class DiaryActivity : AppCompatActivity(), DiaryView {
                 content = contentEditText.text.toString()
             )
         }
+        deleteButton.onClick {
+            presenter.onDeleteButtonClicked()
+        }
 
         presenter.onCreate(
             id = intent.getIntExtra(KEY_DIARY_ID, 0)
@@ -90,6 +93,18 @@ class DiaryActivity : AppCompatActivity(), DiaryView {
             customView(dialogView)
         }
         cityDialog.show()
+    }
+
+    override fun showDeleteConfirmDialog() {
+        AlertDialogBuilder(this).apply {
+            message(getString(R.string.delete_confirm_dialog_message))
+            positiveButton(R.string.general_dialog_delete) {
+                presenter.onDeleteConfirmed(id = intent.getIntExtra(KEY_DIARY_ID, 0))
+            }
+            negativeButton(R.string.general_dialog_cancel) {
+                dismiss()
+            }
+        }.show()
     }
 
     override fun dismissCityDialog() {

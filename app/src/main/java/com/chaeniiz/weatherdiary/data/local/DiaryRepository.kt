@@ -40,8 +40,8 @@ class DiaryRepository(context: Context) : DiaryRepository {
             )
         }
 
-    override fun deleteDiary(diary: Diary): Completable =
+    override fun deleteDiary(id: Int): Completable =
         Completable.fromCallable {
-            dao.deleteDiary(diary.toLocalModel())
+            dao.deleteDiary(id)
         }
 }

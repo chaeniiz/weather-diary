@@ -9,6 +9,7 @@ import com.chaeniiz.weatherdiary.data.network.repositories.CurrentWeatherReposit
 import com.chaeniiz.weatherdiary.presentation.base.DefaultCompletableObserver
 import com.chaeniiz.weatherdiary.presentation.base.DefaultSingleObserver
 import com.chaeniiz.weatherdiary.presentation.convertWeather
+import usecases.DeleteDiary
 import usecases.GetCurrentWeather
 import usecases.GetDiary
 import usecases.UpdateDiary
@@ -23,7 +24,8 @@ class DiaryPresenter(
             context
         )
     ),
-    private val updateDiary: UpdateDiary = UpdateDiary(DiaryRepository(context))
+    private val updateDiary: UpdateDiary = UpdateDiary(DiaryRepository(context)),
+    private val deleteDiary: DeleteDiary = DeleteDiary(DiaryRepository(context))
 ) {
 
     private var location: String = ""
@@ -48,6 +50,14 @@ class DiaryPresenter(
 
     fun onEditButtonClicked(id: Int, content: String) {
         updateDiary(id, content)
+    }
+
+    fun onDeleteButtonClicked() {
+        view.showDeleteConfirmDialog()
+    }
+
+    fun onDeleteConfirmed(id: Int) {
+        deleteDiary(id)
     }
 
     private fun getDiary(id: Int) {
@@ -100,6 +110,21 @@ class DiaryPresenter(
                 content = content,
                 updatedAt = Date()
             )
+        }.execute(object : DefaultCompletableObserver() {
+            override fun onComplete() {
+                view.finish()
+            }
+
+            override fun onError(e: Throwable) {
+                super.onError(e)
+                view.showErrorToast()
+            }
+        })
+    }
+
+    private fun deleteDiary(id: Int) {
+        deleteDiary.apply {
+            this.id = id
         }.execute(object : DefaultCompletableObserver() {
             override fun onComplete() {
                 view.finish()
