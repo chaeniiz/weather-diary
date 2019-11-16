@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Weather Diary</string>
+    <string name="general_dialog_accept">확인</string>
+    <string name="general_error">일시적인 오류가 발생했습니다.</string>
+    <string name="error_no_location">위치를 입력해 주세요.</string>
+    <string name="error_no_content">내용을 입력해 주세요.</string>
 </resources>
