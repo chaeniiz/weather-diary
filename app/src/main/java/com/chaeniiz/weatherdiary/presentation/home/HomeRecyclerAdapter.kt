@@ -24,6 +24,6 @@ class HomeRecyclerAdapter(
         }
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
-        holder.bind(diaries[position])
+        holder.bind(diaries.asReversed()[position])
     }
 }
