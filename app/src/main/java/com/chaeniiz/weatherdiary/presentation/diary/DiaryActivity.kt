@@ -1,12 +1,13 @@
 package com.chaeniiz.weatherdiary.presentation.diary
 
-import android.content.Context
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.chaeniiz.entity.entities.City
 import com.chaeniiz.weatherdiary.R
+import com.chaeniiz.weatherdiary.presentation.RequestCode
 import com.chaeniiz.weatherdiary.presentation.includeCommaAndSpace
 import kotlinx.android.synthetic.main.activity_diary.*
 import org.jetbrains.anko.*
@@ -16,12 +17,13 @@ class DiaryActivity : AppCompatActivity(), DiaryView {
     companion object {
         const val KEY_DIARY_ID = "diary_id"
 
-        fun start(context: Context, id: Int) {
-            context.run {
-                startActivity(
+        fun startForResult(activity: Activity, id: Int) {
+            with(activity) {
+                startActivityForResult(
                     intentFor<DiaryActivity>(
                         KEY_DIARY_ID to id
-                    )
+                    ),
+                    RequestCode.DIARY_ACTIVITY_CODE.ordinal
                 )
             }
         }
@@ -38,6 +40,12 @@ class DiaryActivity : AppCompatActivity(), DiaryView {
 
         locationTextView.onClick {
             presenter.onLocationEditTextClicked()
+        }
+        editButton.onClick {
+            presenter.onEditButtonClicked(
+                id = intent.getIntExtra(KEY_DIARY_ID, 0),
+                content = contentEditText.text.toString()
+            )
         }
 
         presenter.onCreate(

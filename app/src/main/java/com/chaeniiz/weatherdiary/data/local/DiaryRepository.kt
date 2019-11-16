@@ -31,7 +31,13 @@ class DiaryRepository(context: Context) : DiaryRepository {
 
     override fun updateDiary(diary: Diary): Completable =
         Completable.fromCallable {
-            dao.updateDiary(diary.toLocalModel())
+            dao.updateDiary(
+                diary.id,
+                diary.location,
+                diary.weather,
+                diary.content,
+                diary.updatedAt
+            )
         }
 
     override fun deleteDiary(diary: Diary): Completable =

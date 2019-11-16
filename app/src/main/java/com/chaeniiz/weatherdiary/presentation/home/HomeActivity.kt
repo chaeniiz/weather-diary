@@ -37,7 +37,8 @@ class HomeActivity : AppCompatActivity(), HomeView {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            RequestCode.WRITE_ACTIVITY_CODE.ordinal -> presenter.onActivityResultFromWrite()
+            RequestCode.WRITE_ACTIVITY_CODE.ordinal,
+            RequestCode.DIARY_ACTIVITY_CODE.ordinal -> presenter.onActivityResult()
         }
     }
 
@@ -48,7 +49,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
     override fun setAdapter(diaries: List<Diary>) {
         with(diaryRecyclerView) {
             adapter = HomeRecyclerAdapter(
-                diaries.asReversed(),
+                diaries.sortedByDescending { it.updatedAt },
                 presenter::onDiaryClicked
             )
             layoutManager = LinearLayoutManager(context)
@@ -56,6 +57,6 @@ class HomeActivity : AppCompatActivity(), HomeView {
     }
 
     override fun showDiary(id: Int) {
-        DiaryActivity.start(this, id)
+        DiaryActivity.startForResult(this, id)
     }
 }

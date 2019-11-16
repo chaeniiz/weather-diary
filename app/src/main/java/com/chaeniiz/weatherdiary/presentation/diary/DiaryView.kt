@@ -6,4 +6,5 @@ interface DiaryView {
     fun showCityDialog()
     fun dismissCityDialog()
     fun showErrorToast()
+    fun finish()
 }

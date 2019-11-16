@@ -39,7 +39,7 @@ class HomePresenter(
         view.showDiary(id)
     }
 
-    fun onActivityResultFromWrite() {
+    fun onActivityResult() {
         getDiaries()
     }
 }
