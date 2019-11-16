@@ -48,7 +48,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
     override fun setAdapter(diaries: List<Diary>) {
         with(diaryRecyclerView) {
             adapter = HomeRecyclerAdapter(
-                diaries,
+                diaries.asReversed(),
                 presenter::onDiaryClicked
             )
             layoutManager = LinearLayoutManager(context)

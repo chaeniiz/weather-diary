@@ -1,6 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/spacing_500"
+    android:layout_marginTop="@dimen/spacing_675"
+    android:layout_marginEnd="@dimen/spacing_500"
+    android:layout_marginBottom="@dimen/spacing_675"
+    android:orientation="vertical">
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/locationTextView"
+        style="@style/Typography.250"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:gravity="center"
+        android:textColor="@drawable/selector_write_text_view"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="서울, 맑음" />
+
+    <ImageView
+        android:id="@+id/startQuotesImageView"
+        android:layout_width="@dimen/quotes_image_size"
+        android:layout_height="@dimen/quotes_image_size"
+        android:layout_marginTop="@dimen/spacing_600"
+        android:src="@drawable/quotes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/locationTextView" />
+
+    <EditText
+        android:id="@+id/contentEditText"
+        style="@style/Typography.300"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/spacing_100"
+        android:gravity="start"
+        android:lineSpacingExtra="@dimen/spacing_200"
+        app:layout_constraintBottom_toTopOf="@+id/endQuotesImageView"
+        app:layout_constraintTop_toBottomOf="@+id/startQuotesImageView"
+        tools:text="이따금씩 우리의 하루는 그날의 날씨를 따라가곤 했다." />
+
+    <ImageView
+        android:id="@+id/endQuotesImageView"
+        android:layout_width="@dimen/quotes_image_size"
+        android:layout_height="@dimen/quotes_image_size"
+        android:layout_gravity="end"
+        android:rotation="180"
+        android:src="@drawable/quotes"
+        app:layout_constraintBottom_toTopOf="@+id/editButton"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/editButton"
+        style="@style/Typography.450"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:text="수정"
+        android:textColor="@drawable/selector_write_text_view"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/deleteButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/deleteButton"
+        style="@style/Typography.450"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:text="삭제"
+        android:textColor="@drawable/selector_write_text_view"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/editButton" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
