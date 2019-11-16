@@ -15,11 +15,22 @@
         style="@style/Typography.250"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/transparent"
         android:gravity="center"
         android:textColor="@drawable/selector_write_text_view"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="서울, 맑음" />
+
+    <TextView
+        android:id="@+id/updatedAtTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="2019년 11월 30일 11시 30분"
+        style="@style/Typography.250"
+        android:gravity="center"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintTop_toBottomOf="@+id/locationTextView"
+        android:layout_marginTop="@dimen/spacing_200"
+        />
 
     <ImageView
         android:id="@+id/startQuotesImageView"
@@ -28,7 +39,7 @@
         android:layout_marginTop="@dimen/spacing_600"
         android:src="@drawable/quotes"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/locationTextView" />
+        app:layout_constraintTop_toBottomOf="@id/updatedAtTextView" />
 
     <EditText
         android:id="@+id/contentEditText"

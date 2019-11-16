@@ -66,6 +66,10 @@ class DiaryActivity : AppCompatActivity(), DiaryView {
         locationTextView.text = text
     }
 
+    override fun setUpdatedAtTextView(updatedAt: String) {
+        updatedAtTextView.text = updatedAt
+    }
+
     override fun setContentTextView(content: String) {
         contentEditText.setText(content)
     }

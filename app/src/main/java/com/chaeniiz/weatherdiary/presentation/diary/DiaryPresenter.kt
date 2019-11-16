@@ -9,6 +9,7 @@ import com.chaeniiz.weatherdiary.data.network.repositories.CurrentWeatherReposit
 import com.chaeniiz.weatherdiary.presentation.base.DefaultCompletableObserver
 import com.chaeniiz.weatherdiary.presentation.base.DefaultSingleObserver
 import com.chaeniiz.weatherdiary.presentation.convertWeather
+import com.chaeniiz.weatherdiary.presentation.toFormattedString
 import usecases.DeleteDiary
 import usecases.GetCurrentWeather
 import usecases.GetDiary
@@ -74,6 +75,9 @@ class DiaryPresenter(
                 view.setLocationTextView(
                     location = location,
                     weather = weather
+                )
+                view.setUpdatedAtTextView(
+                    t.updatedAt.toFormattedString("yyyy년 M월 dd일 a H시 mm분")
                 )
                 view.setContentTextView(t.content)
             }
