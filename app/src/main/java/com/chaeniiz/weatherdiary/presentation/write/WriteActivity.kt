@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.chaeniiz.entity.entities.City
 import com.chaeniiz.weatherdiary.R
@@ -83,15 +84,15 @@ class WriteActivity : AppCompatActivity(), WriteView {
     }
 
     override fun showErrorDialog(emptyContent: Boolean) {
-        AlertDialogBuilder(this).apply {
-            message(
+        AlertDialog.Builder(this, R.style.WeatherDiaryDialogTheme).apply {
+            setMessage(
                 if (emptyContent)
-                    getString(R.string.error_no_content)
+                    R.string.error_no_content
                 else
-                    getString(R.string.error_no_location)
+                    R.string.error_no_location
             )
-            positiveButton(getString(R.string.general_dialog_accept)) {
-                dismiss()
+            setPositiveButton(R.string.general_dialog_accept) { dialog, _ ->
+                dialog.dismiss()
             }
         }.show()
     }
