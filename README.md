@@ -1,5 +1,6 @@
 # weather-diary ☁️
-An application that records the day with the weather
+<img width="60" alt="스크린샷 2019-11-18 오후 12 23 45" src="https://user-images.githubusercontent.com/20873613/69022324-51fb7a80-09fe-11ea-88a7-a9801fb97703.png"> | An application that records the day with the weather
+--- | ---
 
 _--- preview ---_
 
