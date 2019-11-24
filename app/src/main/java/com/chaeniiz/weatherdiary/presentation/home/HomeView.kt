@@ -6,4 +6,6 @@ interface HomeView {
     fun startWriteActivity()
     fun setAdapter(diaries: List<Diary>)
     fun showDiary(id: Int)
+    fun showEmptyView()
+    fun showErrorToast()
 }

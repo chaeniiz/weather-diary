@@ -1,16 +1,19 @@
 package com.chaeniiz.weatherdiary.presentation.diary
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.chaeniiz.entity.entities.City
 import com.chaeniiz.weatherdiary.R
 import com.chaeniiz.weatherdiary.presentation.RequestCode
+import com.chaeniiz.weatherdiary.presentation.citiesdialog.CitiesDialogActivity
+import com.chaeniiz.weatherdiary.presentation.citiesdialog.ViewMode
 import com.chaeniiz.weatherdiary.presentation.includeCommaAndSpace
 import kotlinx.android.synthetic.main.activity_diary.*
-import org.jetbrains.anko.*
+import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.onClick
+import org.jetbrains.anko.toast
 
 class DiaryActivity : AppCompatActivity(), DiaryView {
 
@@ -32,7 +35,6 @@ class DiaryActivity : AppCompatActivity(), DiaryView {
     private val presenter: DiaryPresenter by lazy {
         DiaryPresenter(this, this)
     }
-    lateinit var cityDialog: AlertDialogBuilder
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,65 +76,52 @@ class DiaryActivity : AppCompatActivity(), DiaryView {
         contentEditText.setText(content)
     }
 
-    override fun showCityDialog() {
-        cityDialog = AlertDialogBuilder(this).apply {
-            val dialogView =
-                LayoutInflater.from(this@DiaryActivity).inflate(R.layout.dialog_cities, null)
-            dialogView.find<TextView>(R.id.descriptionTextView).text =
-                getString(R.string.city_dialog_description_past)
-            dialogView.find<TextView>(R.id.seoulTextView)
-                .onClick { presenter.onCityClicked(City.SEOUL) }
-            dialogView.find<TextView>(R.id.incheonTextView)
-                .onClick { presenter.onCityClicked(City.INCHEON) }
-            dialogView.find<TextView>(R.id.daejeonTextView)
-                .onClick { presenter.onCityClicked(City.DAEJEON) }
-            dialogView.find<TextView>(R.id.gwangjuTextView)
-                .onClick { presenter.onCityClicked(City.GWANGJU) }
-            dialogView.find<TextView>(R.id.busanTextView)
-                .onClick { presenter.onCityClicked(City.BUSAN) }
-            dialogView.find<TextView>(R.id.daeguTextView)
-                .onClick { presenter.onCityClicked(City.DAEGU) }
-            dialogView.find<TextView>(R.id.ulsanTextView)
-                .onClick { presenter.onCityClicked(City.ULSAN) }
-            dialogView.find<TextView>(R.id.jejuTextView)
-                .onClick { presenter.onCityClicked(City.JEJU) }
-            customView(dialogView)
-        }
-        cityDialog.show()
-    }
-
     override fun showErrorDialog(emptyContent: Boolean) {
-        AlertDialogBuilder(this).apply {
-            message(
+        AlertDialog.Builder(this, R.style.WeatherDiaryDialogTheme).apply {
+            setMessage(
                 if (emptyContent)
-                    getString(R.string.error_no_content)
+                    R.string.error_no_content
                 else
-                    getString(R.string.error_no_location)
+                    R.string.error_no_location
             )
-            positiveButton(getString(R.string.general_dialog_accept)) {
-                dismiss()
+            setPositiveButton(R.string.general_accept) { dialog, _ ->
+                dialog.dismiss()
             }
         }.show()
     }
 
     override fun showDeleteConfirmDialog() {
-        AlertDialogBuilder(this).apply {
-            message(getString(R.string.delete_confirm_dialog_message))
-            positiveButton(R.string.general_dialog_delete) {
+        AlertDialog.Builder(this, R.style.WeatherDiaryDialogTheme).apply {
+            setMessage(R.string.delete_confirm_dialog_message)
+            setPositiveButton(R.string.general_delete) { _, _ ->
                 presenter.onDeleteConfirmed(id = intent.getIntExtra(KEY_DIARY_ID, 0))
             }
-            negativeButton(R.string.general_dialog_cancel) {
-                dismiss()
+            setNegativeButton(R.string.general_cancel) { dialog, _ ->
+                dialog.dismiss()
             }
         }.show()
     }
 
-    override fun dismissCityDialog() {
-        if (::cityDialog.isInitialized)
-            cityDialog.dismiss()
-    }
-
     override fun showErrorToast() {
         toast(R.string.general_error)
+    }
+
+    override fun startCitiesDialogActivity() {
+        CitiesDialogActivity.startForResult(this, ViewMode.EDIT)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            RequestCode.CITIES_DIALOG_ACTIVITY_CODE.ordinal -> {
+                if (resultCode == Activity.RESULT_OK)
+                    data?.let {
+                        presenter.onActivityResult(
+                            it.getStringExtra(CitiesDialogActivity.RESULT_LOCATION),
+                            it.getStringExtra(CitiesDialogActivity.RESULT_WEATHER)
+                        )
+                    }
+            }
+        }
     }
 }

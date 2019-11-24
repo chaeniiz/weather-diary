@@ -1,27 +1,16 @@
 package com.chaeniiz.weatherdiary.presentation.write
 
 import android.content.Context
-import com.chaeniiz.entity.entities.City
-import com.chaeniiz.entity.entities.CurrentWeather
 import com.chaeniiz.entity.entities.Diary
 import com.chaeniiz.weatherdiary.data.local.DiaryRepository
-import com.chaeniiz.weatherdiary.data.network.repositories.CurrentWeatherRepository
 import com.chaeniiz.weatherdiary.presentation.base.DefaultCompletableObserver
-import com.chaeniiz.weatherdiary.presentation.base.DefaultSingleObserver
-import com.chaeniiz.weatherdiary.presentation.convertWeather
-import usecases.GetCurrentWeather
 import usecases.InsertDiary
 import java.util.*
 
 class WritePresenter(
     val view: WriteView,
     context: Context,
-    private val insertDiary: InsertDiary = InsertDiary(DiaryRepository(context)),
-    private val getCurrentWeather: GetCurrentWeather = GetCurrentWeather(
-        CurrentWeatherRepository(
-            context
-        )
-    )
+    private val insertDiary: InsertDiary = InsertDiary(DiaryRepository(context))
 ) {
 
     private var location: String = ""
@@ -40,32 +29,13 @@ class WritePresenter(
     }
 
     fun onLocationEditTextClicked() {
-        view.showCityDialog()
+        view.startCitiesDialogActivity()
     }
 
-    fun onCityClicked(city: City) {
-        location = city.formattedString
-        getCurrentWeather(city)
-    }
-
-    private fun getCurrentWeather(city: City) {
-        getCurrentWeather.apply {
-            this.city = city.value
-        }.execute(object : DefaultSingleObserver<CurrentWeather>() {
-            override fun onSuccess(t: CurrentWeather) {
-                weather = t.weather.first().convertWeather()
-                view.setLocationTextView(
-                    location = city.formattedString,
-                    weather = t.weather.first().convertWeather()
-                )
-                view.dismissCityDialog()
-            }
-
-            override fun onError(e: Throwable) {
-                super.onError(e)
-                view.showErrorToast()
-            }
-        })
+    fun onActivityResult(location: String, weather: String) {
+        this.location = location
+        this.weather = weather
+        view.setLocationTextView(location, weather)
     }
 
     private fun writeDiary(
