@@ -123,4 +123,15 @@
         app:layout_constraintStart_toEndOf="@+id/ulsanTextView"
         app:layout_constraintTop_toBottomOf="@+id/gwangjuTextView" />
 
+    <ProgressBar
+        android:id="@+id/dialogProgressBar"
+        android:layout_width="@dimen/spacing_800"
+        android:layout_height="@dimen/spacing_800"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

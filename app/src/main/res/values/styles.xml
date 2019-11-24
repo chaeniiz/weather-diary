@@ -33,4 +33,15 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
+    <style name="WeatherDiaryDialogActivityTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:textAppearanceSmall">@style/Typography.250</item>
+        <item name="android:textAppearanceMedium">@style/Typography.300</item>
+        <item name="android:textAppearanceLarge">@style/Typography.400</item>
+        <item name="android:textAppearance">@style/Typography.250</item>
+        <item name="android:buttonStyle">@style/Typography.250</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
 </resources>
