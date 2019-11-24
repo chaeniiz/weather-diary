@@ -16,18 +16,19 @@
         android:theme="@style/WeatherDiaryTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".presentation.home.HomeActivity">
+        <activity android:name=".presentation.home.HomeActivity" />
+        <activity android:name=".presentation.write.WriteActivity" />
+        <activity android:name=".presentation.diary.DiaryActivity" />
+        <activity
+            android:name="com.chaeniiz.weatherdiary.presentation.citiesdialog.CitiesDialogActivity"
+            android:theme="@style/WeatherDiaryDialogActivityTheme" />
+        <activity android:name=".presentation.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.write.WriteActivity" />
-        <activity android:name=".presentation.diary.DiaryActivity" />
-        <activity
-            android:name="com.chaeniiz.weatherdiary.presentation.citiesdialog.CitiesDialogActivity"
-            android:theme="@style/WeatherDiaryDialogActivityTheme" />
 
     </application>
 
