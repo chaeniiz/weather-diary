@@ -27,6 +27,7 @@ class HomePresenter(
 
             override fun onError(e: Throwable) {
                 super.onError(e)
+                view.showErrorToast()
             }
         })
     }

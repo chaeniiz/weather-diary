@@ -11,6 +11,7 @@ import com.chaeniiz.weatherdiary.presentation.diary.DiaryActivity
 import com.chaeniiz.weatherdiary.presentation.write.WriteActivity
 import kotlinx.android.synthetic.main.activity_home.*
 import org.jetbrains.anko.onClick
+import org.jetbrains.anko.toast
 
 class HomeActivity : AppCompatActivity(), HomeView {
 
@@ -58,5 +59,9 @@ class HomeActivity : AppCompatActivity(), HomeView {
 
     override fun showDiary(id: Int) {
         DiaryActivity.startForResult(this, id)
+    }
+
+    override fun showErrorToast() {
+        toast(R.string.general_error)
     }
 }
