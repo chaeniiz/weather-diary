@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:background="@color/transparent"
         android:gravity="center"
-        android:hint="서울, 맑음"
+        android:hint="@string/diary_location_hint"
         android:textColor="@drawable/selector_write_text_view"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,7 +37,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/spacing_100"
         android:gravity="start"
-        android:hint="이따금씩 우리의 하루는 그날의 날씨를 따라가곤 했다."
+        android:hint="@string/diary_content_hint"
         android:lineSpacingExtra="@dimen/spacing_200"
         app:layout_constraintBottom_toTopOf="@+id/endQuotesImageView"
         app:layout_constraintTop_toBottomOf="@+id/startQuotesImageView" />
@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:gravity="center"
-        android:text="작성"
+        android:text="@string/general_write"
         android:textColor="@drawable/selector_write_text_view"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -2,6 +2,7 @@ package com.chaeniiz.weatherdiary.presentation.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chaeniiz.entity.entities.Diary
@@ -55,10 +56,17 @@ class HomeActivity : AppCompatActivity(), HomeView {
             )
             layoutManager = LinearLayoutManager(context)
         }
+        diaryRecyclerView.visibility = View.VISIBLE
+        emptyTextView.visibility = View.GONE
     }
 
     override fun showDiary(id: Int) {
         DiaryActivity.startForResult(this, id)
+    }
+
+    override fun showEmptyView() {
+        diaryRecyclerView.visibility = View.GONE
+        emptyTextView.visibility = View.VISIBLE
     }
 
     override fun showErrorToast() {

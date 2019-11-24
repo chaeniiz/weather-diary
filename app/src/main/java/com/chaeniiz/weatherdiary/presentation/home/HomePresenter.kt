@@ -22,7 +22,10 @@ class HomePresenter(
     private fun getDiaries() {
         getDiaries.execute(object : DefaultSingleObserver<List<Diary>>() {
             override fun onSuccess(t: List<Diary>) {
-                view.setAdapter(t)
+                if (t.isNotEmpty())
+                    view.setAdapter(t)
+                else
+                    view.showEmptyView()
             }
 
             override fun onError(e: Throwable) {

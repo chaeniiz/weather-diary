@@ -91,7 +91,7 @@ class WriteActivity : AppCompatActivity(), WriteView {
                 else
                     R.string.error_no_location
             )
-            setPositiveButton(R.string.general_dialog_accept) { dialog, _ ->
+            setPositiveButton(R.string.general_accept) { dialog, _ ->
                 dialog.dismiss()
             }
         }.show()

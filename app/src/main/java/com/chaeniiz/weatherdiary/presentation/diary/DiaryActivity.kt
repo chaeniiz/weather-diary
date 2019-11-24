@@ -110,7 +110,7 @@ class DiaryActivity : AppCompatActivity(), DiaryView {
                 else
                     R.string.error_no_location
             )
-            setPositiveButton(R.string.general_dialog_accept) { dialog, _ ->
+            setPositiveButton(R.string.general_accept) { dialog, _ ->
                 dialog.dismiss()
             }
         }.show()
@@ -119,10 +119,10 @@ class DiaryActivity : AppCompatActivity(), DiaryView {
     override fun showDeleteConfirmDialog() {
         AlertDialog.Builder(this, R.style.WeatherDiaryDialogTheme).apply {
             setMessage(R.string.delete_confirm_dialog_message)
-            setPositiveButton(R.string.general_dialog_delete) { _, _ ->
+            setPositiveButton(R.string.general_delete) { _, _ ->
                 presenter.onDeleteConfirmed(id = intent.getIntExtra(KEY_DIARY_ID, 0))
             }
-            setNegativeButton(R.string.general_dialog_cancel) { dialog, _ ->
+            setNegativeButton(R.string.general_cancel) { dialog, _ ->
                 dialog.dismiss()
             }
         }.show()
