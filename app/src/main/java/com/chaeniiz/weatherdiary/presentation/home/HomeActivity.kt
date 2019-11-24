@@ -1,5 +1,6 @@
 package com.chaeniiz.weatherdiary.presentation.home
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -11,6 +12,7 @@ import com.chaeniiz.weatherdiary.presentation.RequestCode
 import com.chaeniiz.weatherdiary.presentation.diary.DiaryActivity
 import com.chaeniiz.weatherdiary.presentation.write.WriteActivity
 import kotlinx.android.synthetic.main.activity_home.*
+import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.toast
 
@@ -18,6 +20,12 @@ class HomeActivity : AppCompatActivity(), HomeView {
 
     private val presenter: HomePresenter by lazy {
         HomePresenter(this, this)
+    }
+
+    companion object {
+        fun start(context: Context) {
+            context.startActivity(context.intentFor<HomeActivity>())
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
