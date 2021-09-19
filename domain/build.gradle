@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'jacoco-android'
 
 android {
     compileSdkVersion rootProject.ext.app_compile_sdk_version

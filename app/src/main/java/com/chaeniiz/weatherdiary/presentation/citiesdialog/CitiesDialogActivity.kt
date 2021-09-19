@@ -4,14 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import com.chaeniiz.entity.entities.City
 import com.chaeniiz.weatherdiary.R
-import com.chaeniiz.weatherdiary.presentation.RequestCode
 import kotlinx.android.synthetic.main.dialog_cities.*
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.onClick
-import org.jetbrains.anko.toast
 
 class CitiesDialogActivity : AppCompatActivity(), CitiesDialogView {
 
@@ -20,15 +18,16 @@ class CitiesDialogActivity : AppCompatActivity(), CitiesDialogView {
         const val RESULT_WEATHER = "result_weather"
         const val VIEW_MODE = "view_mode"
 
-        fun startForResult(activity: Activity, viewMode: ViewMode) {
-            with(activity) {
-                startActivityForResult(
-                    intentFor<CitiesDialogActivity>().apply {
-                        putExtra(VIEW_MODE, viewMode)
-                    },
-                    RequestCode.CITIES_DIALOG_ACTIVITY_CODE.ordinal
-                )
-            }
+        fun startForResult(
+            activityResultLauncher: ActivityResultLauncher<Intent>,
+            activity: Activity,
+            viewMode: ViewMode
+        ) {
+            activityResultLauncher.launch(
+                Intent(activity, CitiesDialogActivity::class.java).apply {
+                    putExtra(VIEW_MODE, viewMode)
+                }
+            )
         }
     }
 
@@ -40,14 +39,14 @@ class CitiesDialogActivity : AppCompatActivity(), CitiesDialogView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialog_cities)
 
-        seoulTextView.onClick { presenter.onCityClicked(City.SEOUL) }
-        incheonTextView.onClick { presenter.onCityClicked(City.INCHEON) }
-        daejeonTextView.onClick { presenter.onCityClicked(City.DAEJEON) }
-        gwangjuTextView.onClick { presenter.onCityClicked(City.GWANGJU) }
-        busanTextView.onClick { presenter.onCityClicked(City.BUSAN) }
-        daeguTextView.onClick { presenter.onCityClicked(City.DAEGU) }
-        ulsanTextView.onClick { presenter.onCityClicked(City.ULSAN) }
-        jejuTextView.onClick { presenter.onCityClicked(City.JEJU) }
+        seoulTextView.setOnClickListener { presenter.onCityClicked(City.SEOUL) }
+        incheonTextView.setOnClickListener { presenter.onCityClicked(City.INCHEON) }
+        daejeonTextView.setOnClickListener { presenter.onCityClicked(City.DAEJEON) }
+        gwangjuTextView.setOnClickListener { presenter.onCityClicked(City.GWANGJU) }
+        busanTextView.setOnClickListener { presenter.onCityClicked(City.BUSAN) }
+        daeguTextView.setOnClickListener { presenter.onCityClicked(City.DAEGU) }
+        ulsanTextView.setOnClickListener { presenter.onCityClicked(City.ULSAN) }
+        jejuTextView.setOnClickListener { presenter.onCityClicked(City.JEJU) }
 
         presenter.onCreate(intent.getSerializableExtra(VIEW_MODE) as ViewMode)
     }
@@ -76,7 +75,7 @@ class CitiesDialogActivity : AppCompatActivity(), CitiesDialogView {
     }
 
     override fun showErrorToast() {
-        toast(R.string.general_error)
+        Toast.makeText(this, R.string.general_error, Toast.LENGTH_SHORT).show()
     }
 
     override fun setDescriptionTextView(current: Boolean) {

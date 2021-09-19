@@ -4,17 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chaeniiz.entity.entities.Diary
 import com.chaeniiz.weatherdiary.R
-import com.chaeniiz.weatherdiary.presentation.RequestCode
 import com.chaeniiz.weatherdiary.presentation.diary.DiaryActivity
 import com.chaeniiz.weatherdiary.presentation.write.WriteActivity
 import kotlinx.android.synthetic.main.activity_home.*
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.onClick
-import org.jetbrains.anko.toast
 
 class HomeActivity : AppCompatActivity(), HomeView {
 
@@ -24,15 +22,29 @@ class HomeActivity : AppCompatActivity(), HomeView {
 
     companion object {
         fun start(context: Context) {
-            context.startActivity(context.intentFor<HomeActivity>())
+            context.startActivity(
+                Intent(context, HomeActivity::class.java)
+            )
         }
+    }
+
+    private val launcherForWriteActivity = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        presenter.onActivityResult()
+    }
+
+    private val launcherForDiaryActivity = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        presenter.onActivityResult()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        writeButton.onClick {
+        writeButton.setOnClickListener {
             presenter.onWriteButtonClicked()
         }
 
@@ -44,16 +56,8 @@ class HomeActivity : AppCompatActivity(), HomeView {
         presenter.onDestroy()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            RequestCode.WRITE_ACTIVITY_CODE.ordinal,
-            RequestCode.DIARY_ACTIVITY_CODE.ordinal -> presenter.onActivityResult()
-        }
-    }
-
     override fun startWriteActivity() {
-        WriteActivity.startForResult(this)
+        WriteActivity.startForResult(launcherForWriteActivity, this)
     }
 
     override fun setAdapter(diaries: List<Diary>) {
@@ -69,7 +73,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
     }
 
     override fun showDiary(id: Int) {
-        DiaryActivity.startForResult(this, id)
+        DiaryActivity.startForResult(launcherForDiaryActivity, this, id)
     }
 
     override fun showEmptyView() {
@@ -78,6 +82,6 @@ class HomeActivity : AppCompatActivity(), HomeView {
     }
 
     override fun showErrorToast() {
-        toast(R.string.general_error)
+        Toast.makeText(this, R.string.general_error, Toast.LENGTH_SHORT).show()
     }
 }

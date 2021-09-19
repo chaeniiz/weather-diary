@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chaeniiz.entity.entities.Diary
 import com.chaeniiz.weatherdiary.R
-import org.jetbrains.anko.onClick
 
 class HomeRecyclerAdapter(
     private val diaries: List<Diary>,
@@ -18,8 +17,8 @@ class HomeRecyclerAdapter(
         HomeViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_diary, parent, false)
         ).apply {
-            itemView.onClick {
-                onItemClicked(diaries[adapterPosition].id)
+            itemView.setOnClickListener {
+                onItemClicked(diaries[bindingAdapterPosition].id)
             }
         }
 

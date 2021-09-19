@@ -3,28 +3,27 @@ package com.chaeniiz.weatherdiary.presentation.write
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.chaeniiz.weatherdiary.R
-import com.chaeniiz.weatherdiary.presentation.RequestCode
 import com.chaeniiz.weatherdiary.presentation.citiesdialog.CitiesDialogActivity
 import com.chaeniiz.weatherdiary.presentation.citiesdialog.ViewMode
 import com.chaeniiz.weatherdiary.presentation.includeCommaAndSpace
 import kotlinx.android.synthetic.main.activity_write.*
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.onClick
-import org.jetbrains.anko.toast
 
 class WriteActivity : AppCompatActivity(), WriteView {
 
     companion object {
-        fun startForResult(activity: Activity) {
-            with(activity) {
-                startActivityForResult(
-                    intentFor<WriteActivity>(),
-                    RequestCode.WRITE_ACTIVITY_CODE.ordinal
-                )
-            }
+        fun startForResult(
+            activityResultLauncher: ActivityResultLauncher<Intent>,
+            activity: Activity
+        ) {
+            activityResultLauncher.launch(
+                Intent(activity, WriteActivity::class.java)
+            )
         }
     }
 
@@ -32,15 +31,27 @@ class WriteActivity : AppCompatActivity(), WriteView {
         WritePresenter(this, this)
     }
 
+    private val launcherForCitiesDialogActivity = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()) { activityResult ->
+        if (activityResult.resultCode == Activity.RESULT_OK) {
+            activityResult.data?.let {
+                presenter.onActivityResult(
+                    it.getStringExtra(CitiesDialogActivity.RESULT_LOCATION),
+                    it.getStringExtra(CitiesDialogActivity.RESULT_WEATHER)
+                )
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write)
 
-        writeButton.onClick {
+        writeButton.setOnClickListener {
             presenter.onWriteButtonClicked(content = contentEditText.text.toString())
         }
 
-        locationTextView.onClick {
+        locationTextView.setOnClickListener {
             presenter.onLocationEditTextClicked()
         }
 
@@ -67,25 +78,10 @@ class WriteActivity : AppCompatActivity(), WriteView {
     }
 
     override fun showErrorToast() {
-        toast(R.string.general_error)
+        Toast.makeText(this, R.string.general_error, Toast.LENGTH_SHORT).show()
     }
 
     override fun startCitiesDialogActivity() {
-        CitiesDialogActivity.startForResult(this, ViewMode.WRITE)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            RequestCode.CITIES_DIALOG_ACTIVITY_CODE.ordinal -> {
-                if (resultCode == Activity.RESULT_OK)
-                    data?.let {
-                        presenter.onActivityResult(
-                            it.getStringExtra(CitiesDialogActivity.RESULT_LOCATION),
-                            it.getStringExtra(CitiesDialogActivity.RESULT_WEATHER)
-                        )
-                    }
-            }
-        }
+        CitiesDialogActivity.startForResult(launcherForCitiesDialogActivity, this, ViewMode.WRITE)
     }
 }
