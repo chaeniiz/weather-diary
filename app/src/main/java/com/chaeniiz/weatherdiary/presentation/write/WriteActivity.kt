@@ -36,8 +36,8 @@ class WriteActivity : AppCompatActivity(), WriteView {
         if (activityResult.resultCode == Activity.RESULT_OK) {
             activityResult.data?.let {
                 presenter.onActivityResult(
-                    it.getStringExtra(CitiesDialogActivity.RESULT_LOCATION),
-                    it.getStringExtra(CitiesDialogActivity.RESULT_WEATHER)
+                    it.getStringExtra(CitiesDialogActivity.RESULT_LOCATION)!!,
+                    it.getStringExtra(CitiesDialogActivity.RESULT_WEATHER)!!
                 )
             }
         }
