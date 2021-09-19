@@ -9,9 +9,12 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import com.chaeniiz.entity.entities.City
 import com.chaeniiz.weatherdiary.R
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.dialog_cities.*
+import org.koin.android.ext.android.inject
 
-class CitiesDialogActivity : AppCompatActivity(), CitiesDialogView {
+class CitiesDialogActivity : AppCompatActivity() {
 
     companion object {
         const val RESULT_LOCATION = "result_location"
@@ -31,27 +34,60 @@ class CitiesDialogActivity : AppCompatActivity(), CitiesDialogView {
         }
     }
 
-    private val presenter: CitiesDialogPresenter by lazy {
-        CitiesDialogPresenter(this, this)
-    }
+    private val viewModel: CitiesDialogViewModel by inject()
+    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialog_cities)
 
-        seoulTextView.setOnClickListener { presenter.onCityClicked(City.SEOUL) }
-        incheonTextView.setOnClickListener { presenter.onCityClicked(City.INCHEON) }
-        daejeonTextView.setOnClickListener { presenter.onCityClicked(City.DAEJEON) }
-        gwangjuTextView.setOnClickListener { presenter.onCityClicked(City.GWANGJU) }
-        busanTextView.setOnClickListener { presenter.onCityClicked(City.BUSAN) }
-        daeguTextView.setOnClickListener { presenter.onCityClicked(City.DAEGU) }
-        ulsanTextView.setOnClickListener { presenter.onCityClicked(City.ULSAN) }
-        jejuTextView.setOnClickListener { presenter.onCityClicked(City.JEJU) }
+        seoulTextView.setOnClickListener { viewModel.getCurrentWeather(City.SEOUL) }
+        incheonTextView.setOnClickListener { viewModel.getCurrentWeather(City.INCHEON) }
+        daejeonTextView.setOnClickListener { viewModel.getCurrentWeather(City.DAEJEON) }
+        gwangjuTextView.setOnClickListener { viewModel.getCurrentWeather(City.GWANGJU) }
+        busanTextView.setOnClickListener { viewModel.getCurrentWeather(City.BUSAN) }
+        daeguTextView.setOnClickListener { viewModel.getCurrentWeather(City.DAEGU) }
+        ulsanTextView.setOnClickListener { viewModel.getCurrentWeather(City.ULSAN) }
+        jejuTextView.setOnClickListener { viewModel.getCurrentWeather(City.JEJU) }
 
-        presenter.onCreate(intent.getSerializableExtra(VIEW_MODE) as ViewMode)
+        initialize()
+        observeState()
     }
 
-    override fun showProgressBar() {
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
+    }
+
+    private fun initialize() {
+        when (intent.getSerializableExtra(VIEW_MODE) as ViewMode) {
+            ViewMode.WRITE -> setDescriptionTextView(current = true)
+            ViewMode.EDIT -> setDescriptionTextView(current = false)
+        }
+    }
+
+    private fun observeState() {
+        compositeDisposable += viewModel.state.subscribe { state ->
+            when (state) {
+                CitiesDialogState.GetCurrentWeatherFailed -> {
+                    showErrorToast()
+                    finish()
+                }
+                is CitiesDialogState.GetCurrentWeatherSucceed -> {
+                    setResult(
+                        location = state.location,
+                        weather = state.weather
+                    )
+                    finish()
+                }
+                CitiesDialogState.Loading -> {
+                    showProgressBar()
+                }
+            }
+        }
+    }
+
+    private fun showProgressBar() {
         dialogProgressBar.visibility = View.VISIBLE
         descriptionTextView.visibility = View.INVISIBLE
         seoulTextView.visibility = View.INVISIBLE
@@ -64,7 +100,7 @@ class CitiesDialogActivity : AppCompatActivity(), CitiesDialogView {
         jejuTextView.visibility = View.INVISIBLE
     }
 
-    override fun setResult(location: String, weather: String) {
+    private fun setResult(location: String, weather: String) {
         setResult(
             Activity.RESULT_OK,
             Intent().apply {
@@ -74,11 +110,11 @@ class CitiesDialogActivity : AppCompatActivity(), CitiesDialogView {
         )
     }
 
-    override fun showErrorToast() {
+    private fun showErrorToast() {
         Toast.makeText(this, R.string.general_error, Toast.LENGTH_SHORT).show()
     }
 
-    override fun setDescriptionTextView(current: Boolean) {
+    private fun setDescriptionTextView(current: Boolean) {
         if (current)
             descriptionTextView.text = getString(R.string.city_dialog_description_current)
         else
