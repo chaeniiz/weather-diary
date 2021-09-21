@@ -12,7 +12,7 @@ MVVM pattern, Clean Architecture
 - [OkHttp](http://square.github.io/okhttp/)
 - [Room](https://developer.android.com/jetpack/androidx/releases/room?hl=ko)
 - [Koin](https://insert-koin.io)
-  - (Gonna be migrate to [Hilt](https://developer.android.com/training/dependency-injection/hilt-android?hl=ko) soon!)
+  - (Gonna be migrated to [Hilt](https://developer.android.com/training/dependency-injection/hilt-android?hl=ko) soon!)
 
 ### preview
 
