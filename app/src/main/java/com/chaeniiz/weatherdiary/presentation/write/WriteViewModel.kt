@@ -1,41 +1,31 @@
 package com.chaeniiz.weatherdiary.presentation.write
 
 import android.content.Context
+import androidx.lifecycle.ViewModel
 import com.chaeniiz.entity.entities.Diary
 import com.chaeniiz.weatherdiary.data.local.DiaryRepository
 import com.chaeniiz.weatherdiary.presentation.base.DefaultCompletableObserver
+import io.reactivex.subjects.BehaviorSubject
 import usecases.InsertDiary
 import java.util.*
 
-class WritePresenter(
-    val view: WriteView,
+class WriteViewModel(
     context: Context,
     private val insertDiary: InsertDiary = InsertDiary(DiaryRepository(context))
-) {
+) : ViewModel() {
 
-    private var location: String = ""
-    private var weather: String = ""
+    val state: BehaviorSubject<WriteState> = BehaviorSubject.create()
 
-    fun onCreate() {
-        /* explicitly empty */
-    }
-
-    fun onWriteButtonClicked(content: String) {
+    fun onWriteButtonClicked(
+        location: String,
+        weather: String,
+        content: String
+    ) {
         when {
-            location == "" || weather == "" -> view.showErrorDialog(emptyContent = false)
-            content == "" -> view.showErrorDialog(emptyContent = true)
+            location == "" || weather == "" -> state.onNext(WriteState.Error.EmptyLocation)
+            content == "" -> state.onNext(WriteState.Error.EmptyContent)
             else -> writeDiary(location, weather, content, Date())
         }
-    }
-
-    fun onLocationEditTextClicked() {
-        view.startCitiesDialogActivity()
-    }
-
-    fun onActivityResult(location: String, weather: String) {
-        this.location = location
-        this.weather = weather
-        view.setLocationTextView(location, weather)
     }
 
     private fun writeDiary(
@@ -53,12 +43,12 @@ class WritePresenter(
             )
         }.execute(object : DefaultCompletableObserver() {
             override fun onComplete() {
-                view.finish()
+                state.onNext(WriteState.WriteDiarySucceed)
             }
 
             override fun onError(e: Throwable) {
                 super.onError(e)
-                view.showErrorToast()
+                state.onNext(WriteState.Error.Server)
             }
         })
     }
