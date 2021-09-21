@@ -12,13 +12,12 @@ import com.chaeniiz.entity.entities.Diary
 import com.chaeniiz.weatherdiary.R
 import com.chaeniiz.weatherdiary.presentation.diary.DiaryActivity
 import com.chaeniiz.weatherdiary.presentation.write.WriteActivity
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.activity_home.*
+import org.koin.android.ext.android.inject
 
-class HomeActivity : AppCompatActivity(), HomeView {
-
-    private val presenter: HomePresenter by lazy {
-        HomePresenter(this, this)
-    }
+class HomeActivity : AppCompatActivity() {
 
     companion object {
         fun start(context: Context) {
@@ -31,57 +30,76 @@ class HomeActivity : AppCompatActivity(), HomeView {
     private val launcherForWriteActivity = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
-        presenter.onActivityResult()
+        viewModel.getDiaries()
     }
 
     private val launcherForDiaryActivity = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
-        presenter.onActivityResult()
+        viewModel.getDiaries()
     }
+
+    private val viewModel: HomeViewModel by inject()
+    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
         writeButton.setOnClickListener {
-            presenter.onWriteButtonClicked()
+            startWriteActivity()
         }
 
-        presenter.onCreate()
+        observeState()
+        viewModel.getDiaries()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter.onDestroy()
+        compositeDisposable.dispose()
     }
 
-    override fun startWriteActivity() {
+    private fun observeState() {
+        compositeDisposable += viewModel.state.subscribe { state ->
+            when (state) {
+                HomeState.GetDiariesFailed -> {
+                    showErrorToast()
+                }
+                is HomeState.GetDiariesSucceedWithItems -> {
+                    setAdapter(state.diaries)
+                }
+                HomeState.GetDiariesSucceedWithoutItems -> {
+                    showEmptyView()
+                }
+            }
+        }
+    }
+
+    private fun startWriteActivity() {
         WriteActivity.startForResult(launcherForWriteActivity, this)
     }
 
-    override fun setAdapter(diaries: List<Diary>) {
+    private fun setAdapter(diaries: List<Diary>) {
         with(diaryRecyclerView) {
             adapter = HomeRecyclerAdapter(
-                diaries.sortedByDescending { it.updatedAt },
-                presenter::onDiaryClicked
-            )
+                diaries.sortedByDescending { it.updatedAt }
+            ) { showDiary(it) }
             layoutManager = LinearLayoutManager(context)
         }
         diaryRecyclerView.visibility = View.VISIBLE
         emptyTextView.visibility = View.GONE
     }
 
-    override fun showDiary(id: Int) {
+    private fun showDiary(id: Int) {
         DiaryActivity.startForResult(launcherForDiaryActivity, this, id)
     }
 
-    override fun showEmptyView() {
+    private fun showEmptyView() {
         diaryRecyclerView.visibility = View.GONE
         emptyTextView.visibility = View.VISIBLE
     }
 
-    override fun showErrorToast() {
+    private fun showErrorToast() {
         Toast.makeText(this, R.string.general_error, Toast.LENGTH_SHORT).show()
     }
 }

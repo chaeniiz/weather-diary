@@ -1,49 +1,33 @@
 package com.chaeniiz.weatherdiary.presentation.home
 
 import android.content.Context
+import androidx.lifecycle.ViewModel
 import com.chaeniiz.entity.entities.Diary
 import com.chaeniiz.weatherdiary.data.local.DiaryRepository
 import com.chaeniiz.weatherdiary.presentation.base.DefaultSingleObserver
+import io.reactivex.subjects.BehaviorSubject
 import usecases.GetDiaries
 
-class HomePresenter(
-    val view: HomeView,
+class HomeViewModel(
     context: Context,
     private val getDiaries: GetDiaries = GetDiaries(DiaryRepository(context))
-) {
-    fun onDestroy() {
-        getDiaries.dispose()
-    }
+) : ViewModel() {
 
-    fun onCreate() {
-        getDiaries()
-    }
+    val state: BehaviorSubject<HomeState> = BehaviorSubject.create()
 
-    private fun getDiaries() {
+    fun getDiaries() {
         getDiaries.execute(object : DefaultSingleObserver<List<Diary>>() {
             override fun onSuccess(t: List<Diary>) {
                 if (t.isNotEmpty())
-                    view.setAdapter(t)
+                    state.onNext(HomeState.GetDiariesSucceedWithItems(t))
                 else
-                    view.showEmptyView()
+                    state.onNext(HomeState.GetDiariesSucceedWithoutItems)
             }
 
             override fun onError(e: Throwable) {
                 super.onError(e)
-                view.showErrorToast()
+                state.onNext(HomeState.GetDiariesFailed)
             }
         })
-    }
-
-    fun onWriteButtonClicked() {
-        view.startWriteActivity()
-    }
-
-    fun onDiaryClicked(id: Int) {
-        view.showDiary(id)
-    }
-
-    fun onActivityResult() {
-        getDiaries()
     }
 }
