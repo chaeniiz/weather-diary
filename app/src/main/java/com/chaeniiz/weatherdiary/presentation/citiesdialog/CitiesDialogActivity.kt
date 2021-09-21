@@ -41,15 +41,6 @@ class CitiesDialogActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialog_cities)
 
-        seoulTextView.setOnClickListener { viewModel.getCurrentWeather(City.SEOUL) }
-        incheonTextView.setOnClickListener { viewModel.getCurrentWeather(City.INCHEON) }
-        daejeonTextView.setOnClickListener { viewModel.getCurrentWeather(City.DAEJEON) }
-        gwangjuTextView.setOnClickListener { viewModel.getCurrentWeather(City.GWANGJU) }
-        busanTextView.setOnClickListener { viewModel.getCurrentWeather(City.BUSAN) }
-        daeguTextView.setOnClickListener { viewModel.getCurrentWeather(City.DAEGU) }
-        ulsanTextView.setOnClickListener { viewModel.getCurrentWeather(City.ULSAN) }
-        jejuTextView.setOnClickListener { viewModel.getCurrentWeather(City.JEJU) }
-
         initialize()
         observeState()
     }
@@ -60,6 +51,15 @@ class CitiesDialogActivity : AppCompatActivity() {
     }
 
     private fun initialize() {
+        seoulTextView.setOnClickListener { viewModel.getCurrentWeather(City.SEOUL) }
+        incheonTextView.setOnClickListener { viewModel.getCurrentWeather(City.INCHEON) }
+        daejeonTextView.setOnClickListener { viewModel.getCurrentWeather(City.DAEJEON) }
+        gwangjuTextView.setOnClickListener { viewModel.getCurrentWeather(City.GWANGJU) }
+        busanTextView.setOnClickListener { viewModel.getCurrentWeather(City.BUSAN) }
+        daeguTextView.setOnClickListener { viewModel.getCurrentWeather(City.DAEGU) }
+        ulsanTextView.setOnClickListener { viewModel.getCurrentWeather(City.ULSAN) }
+        jejuTextView.setOnClickListener { viewModel.getCurrentWeather(City.JEJU) }
+
         when (intent.getSerializableExtra(VIEW_MODE) as ViewMode) {
             ViewMode.WRITE -> setDescriptionTextView(current = true)
             ViewMode.EDIT -> setDescriptionTextView(current = false)
