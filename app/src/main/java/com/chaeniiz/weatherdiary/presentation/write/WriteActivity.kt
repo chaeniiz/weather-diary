@@ -12,9 +12,12 @@ import com.chaeniiz.weatherdiary.R
 import com.chaeniiz.weatherdiary.presentation.citiesdialog.CitiesDialogActivity
 import com.chaeniiz.weatherdiary.presentation.citiesdialog.ViewMode
 import com.chaeniiz.weatherdiary.presentation.includeCommaAndSpace
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.activity_write.*
+import org.koin.android.ext.android.inject
 
-class WriteActivity : AppCompatActivity(), WriteView {
+class WriteActivity : AppCompatActivity() {
 
     companion object {
         fun startForResult(
@@ -27,46 +30,75 @@ class WriteActivity : AppCompatActivity(), WriteView {
         }
     }
 
-    private val presenter: WritePresenter by lazy {
-        WritePresenter(this, this)
-    }
-
     private val launcherForCitiesDialogActivity = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()) { activityResult ->
+        ActivityResultContracts.StartActivityForResult()
+    ) { activityResult ->
         if (activityResult.resultCode == Activity.RESULT_OK) {
             activityResult.data?.let {
-                presenter.onActivityResult(
-                    it.getStringExtra(CitiesDialogActivity.RESULT_LOCATION),
-                    it.getStringExtra(CitiesDialogActivity.RESULT_WEATHER)
-                )
+                location = it.getStringExtra(CitiesDialogActivity.RESULT_LOCATION)!!
+                weather = it.getStringExtra(CitiesDialogActivity.RESULT_WEATHER)!!
+                setLocationTextView(location, weather)
             }
         }
     }
+
+    private val viewModel: WriteViewModel by inject()
+    private val compositeDisposable = CompositeDisposable()
+    private var location: String = ""
+    private var weather: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write)
 
         writeButton.setOnClickListener {
-            presenter.onWriteButtonClicked(content = contentEditText.text.toString())
+            viewModel.onWriteButtonClicked(
+                location = location,
+                weather = weather,
+                content = contentEditText.text.toString()
+            )
         }
 
         locationTextView.setOnClickListener {
-            presenter.onLocationEditTextClicked()
+            startCitiesDialogActivity()
         }
 
-        presenter.onCreate()
+        observeState()
     }
 
-    override fun setLocationTextView(location: String, weather: String) {
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
+    }
+
+    private fun observeState() {
+        compositeDisposable += viewModel.state.subscribe { state ->
+            when (state) {
+                WriteState.Error.EmptyContent -> {
+                    showErrorDialog(state)
+                }
+                WriteState.Error.EmptyLocation -> {
+                    showErrorDialog(state)
+                }
+                WriteState.Error.Server -> {
+                    showErrorToast()
+                }
+                WriteState.WriteDiarySucceed -> {
+                    finish()
+                }
+            }
+        }
+    }
+
+    private fun setLocationTextView(location: String, weather: String) {
         val text = location.includeCommaAndSpace() + weather
         locationTextView.text = text
     }
 
-    override fun showErrorDialog(emptyContent: Boolean) {
+    private fun showErrorDialog(error: WriteState) {
         AlertDialog.Builder(this, R.style.WeatherDiaryDialogTheme).apply {
             setMessage(
-                if (emptyContent)
+                if (error is WriteState.Error.EmptyContent)
                     R.string.error_no_content
                 else
                     R.string.error_no_location
@@ -77,11 +109,11 @@ class WriteActivity : AppCompatActivity(), WriteView {
         }.show()
     }
 
-    override fun showErrorToast() {
+    private fun showErrorToast() {
         Toast.makeText(this, R.string.general_error, Toast.LENGTH_SHORT).show()
     }
 
-    override fun startCitiesDialogActivity() {
+    private fun startCitiesDialogActivity() {
         CitiesDialogActivity.startForResult(launcherForCitiesDialogActivity, this, ViewMode.WRITE)
     }
 }
